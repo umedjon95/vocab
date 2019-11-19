@@ -10,36 +10,35 @@ import (
 )
 
 type Card struct {
-	ID            int    `json:"ID"`
-	Word          string `json:"Word"`
-	Transcription string `json:"Transcription"`
-	Meaning       string `json:"Meaning"`
-	Translation   string `json:"Translation"`
+	ID      int    `json:"ID"`
+	Word    string `json:"Word"`
+	Meaning string `json:"Meaning"`
 }
 
 func main() {
 
-	http.HandleFunc("/", getpage)
-
-	db, err := sql.Open("mysql", "root:Lampochka95@tcp(127.0.0.1:3306)/wordlist")
+	db, err := sql.Open("mysql", "root:Lampochka95@tcp(127.0.0.1:3306)/vocabulary")
 	if err != nil {
 		fmt.Println("Error connecting to DB:", err)
 		return
 	}
 
 	var card Card
-	err = db.QueryRow("SELECT ID, Word, Transcription, Meaning, Translation FROM elementary where ID = ?", 1).Scan(&card.ID, &card.Word, &card.Transcription, &card.Meaning, &card.Translation)
+	var word string
+	fmt.Scanf("%s", &word)
+	err = db.QueryRow("SELECT ID, Word, Meaning FROM words where Word = ?", word).Scan(&card.ID, &card.Word, &card.Meaning)
 	if err != nil {
-		fmt.Println("Error in query: ", err)
+		fmt.Println("Error in db.QueryRow(: ", err)
 		return
 	}
-	fmt.Println(card.ID, card.Word, card.Transcription, card.Meaning, card.Translation)
+	fmt.Println(card.ID, card.Word, card.Meaning)
 
-	http.HandleFunc("/page", giveeReponse)
-	http.ListenAndServe(":8080", nil)
+	// http.HandleFunc("/", index)
+	// http.HandleFunc("/page", giveReponse)
+	// http.ListenAndServe(":8080", nil)
 }
 
-func getpage(w http.ResponseWriter, r *http.Request) {
+func index(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("index.html")
 	if err != nil {
 		w.Write([]byte(err.Error()))
@@ -48,7 +47,7 @@ func getpage(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-func giveeReponse(w http.ResponseWriter, r *http.Request) {
+func giveReponse(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		fmt.Println(err)
