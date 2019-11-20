@@ -1,0 +1,12 @@
+{
+    "server":{
+      "name": "vocablary",
+      "addr": "0.0.0.0:8080"
+    },
+    "database": {
+      "addr": "localhost",
+      "user": "postgres",
+      "pass": "postgres",
+      "dbname": "vocabulary"
+    }
+  }

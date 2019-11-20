@@ -1,61 +1,29 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
+	"vocabulary/config"
+	"vocabulary/controllers"
+	"vocabulary/db"
+	"log"
 	"net/http"
-	"text/template"
-
-	_ "github.com/go-sql-driver/mysql"
+	"flag"
+	
+	_ "github.com/lib/pq"
 )
-
-type Card struct {
-	ID            int    `json:"ID"`
-	Word          string `json:"Word"`
-	Transcription string `json:"Transcription"`
-	Meaning       string `json:"Meaning"`
-	Translation   string `json:"Translation"`
-}
-
 func main() {
-
-	http.HandleFunc("/", getpage)
-
-	db, err := sql.Open("mysql", "root:Lampochka95@tcp(127.0.0.1:3306)/wordlist")
+	cfgFilePath := flag.String("config", "config/config.json", "path of the config file")
+	conf, err := config.Parce(*cfgFilePath)
 	if err != nil {
-		fmt.Println("Error connecting to DB:", err)
-		return
+		log.Fatalln("Parcing config file err:", err)
 	}
 
-	var card Card
-	err = db.QueryRow("SELECT ID, Word, Transcription, Meaning, Translation FROM elementary where ID = ?", 1).Scan(&card.ID, &card.Word, &card.Transcription, &card.Meaning, &card.Translation)
+	err = db.Connect()
 	if err != nil {
-		fmt.Println("Error in query: ", err)
-		return
+		log.Fatalln("Connecting to db err:", err)
 	}
-	fmt.Println(card.ID, card.Word, card.Transcription, card.Meaning, card.Translation)
+	defer db.Close()
 
-	http.HandleFunc("/page", giveeReponse)
-	http.ListenAndServe(":8080", nil)
-}
+	http.HandleFunc("/", controllers.GetCards)
 
-func getpage(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("index.html")
-	if err != nil {
-		w.Write([]byte(err.Error()))
-		return
-	}
-	tmpl.Execute(w, nil)
-}
-
-func giveeReponse(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	word := r.FormValue("word")
-
-	w.Write([]byte(word))
+	http.ListenAndServe(conf.Server.Addr, nil)
 }
