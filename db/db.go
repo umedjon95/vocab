@@ -1,22 +1,23 @@
 package db
 
 import (
-	"vocabulary/config"
-	"vocabulary/models"
 	"database/sql"
 	"fmt"
+	"vocabulary/config"
+	"vocabulary/models"
 )
 
 var (
-	db *sql.DB
+	db  *sql.DB
 	err error
 )
 
 func Connect() error {
 	dbConf := config.Peek().Database
-	psqlInfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",
-		dbConf.Addr, dbConf.User, dbConf.Pass, dbConf.DBName)
-	db, err = sql.Open("postgres", psqlInfo)
+	psqlInfo := fmt.Sprintf("%s:%s@tcp(127.0.0.1:%s)/%s",
+		dbConf.User, dbConf.Pass, dbConf.Addr, dbConf.DBName)
+	db, err = sql.Open("mysql", psqlInfo)
+
 	return err
 }
 
@@ -24,7 +25,7 @@ func Close() error {
 	return db.Close()
 }
 
-func GetCards() ([]models.GetCard, error)  {
+func GetCards() ([]models.GetCard, error) {
 	rows, err := db.Query("SELECT id, word, meaning FROM words")
 	if err != nil {
 		return nil, err

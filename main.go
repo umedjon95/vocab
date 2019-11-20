@@ -1,15 +1,16 @@
 package main
 
 import (
+	"flag"
+	"log"
+	"net/http"
 	"vocabulary/config"
 	"vocabulary/controllers"
 	"vocabulary/db"
-	"log"
-	"net/http"
-	"flag"
-	
-	_ "github.com/lib/pq"
+
+	_ "github.com/go-sql-driver/mysql"
 )
+
 func main() {
 	cfgFilePath := flag.String("config", "config/config.json", "path of the config file")
 	conf, err := config.Parce(*cfgFilePath)
