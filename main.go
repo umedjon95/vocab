@@ -12,6 +12,7 @@ import (
 )
 
 func main() {
+
 	cfgFilePath := flag.String("config", "config/config.json", "path of the config file")
 	conf, err := config.Parce(*cfgFilePath)
 	if err != nil {
@@ -24,7 +25,10 @@ func main() {
 	}
 	defer db.Close()
 
-	http.HandleFunc("/", controllers.GetCards)
+	http.HandleFunc("/", controllers.GetPage)
+	http.HandleFunc("/page", controllers.GetCard)
+
+	http.HandleFunc("/all", controllers.GetCards)
 
 	http.ListenAndServe(conf.Server.Addr, nil)
 }

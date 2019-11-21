@@ -25,6 +25,16 @@ func Close() error {
 	return db.Close()
 }
 
+func GetCard(word string) (models.GetCard, error) {
+
+	card := models.GetCard{}
+	err := db.QueryRow("SELECT id, word, meaning FROM words where word = ?", word).Scan(&card.ID, &card.Word, &card.Meaning)
+	if err != nil {
+		return card, err
+	}
+	return card, nil
+}
+
 func GetCards() ([]models.GetCard, error) {
 	rows, err := db.Query("SELECT id, word, meaning FROM words")
 	if err != nil {
