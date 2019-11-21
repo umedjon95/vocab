@@ -1,6 +1,6 @@
 {
     "server":{
-      "name": "vocablary",
+      "name": "vocab",
       "addr": "0.0.0.0:8080"
     },
     "database": {

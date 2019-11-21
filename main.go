@@ -4,9 +4,9 @@ import (
 	"flag"
 	"log"
 	"net/http"
-	"vocabulary/config"
-	"vocabulary/controllers"
-	"vocabulary/db"
+	"vocab/config"
+	"vocab/controllers"
+	"vocab/db"
 
 	_ "github.com/go-sql-driver/mysql"
 )

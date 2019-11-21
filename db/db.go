@@ -3,8 +3,8 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"vocabulary/config"
-	"vocabulary/models"
+	"vocab/config"
+	"vocab/models"
 )
 
 var (

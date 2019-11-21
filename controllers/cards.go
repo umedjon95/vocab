@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"text/template"
-	"vocabulary/db"
+	"vocab/db"
 )
 
 func GetPage(w http.ResponseWriter, r *http.Request) {
