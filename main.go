@@ -8,7 +8,8 @@ import (
 	"vocab/controllers"
 	"vocab/db"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/julienschmidt/httprouter"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -25,10 +26,17 @@ func main() {
 	}
 	defer db.Close()
 
-	http.HandleFunc("/", controllers.GetPage)
-	http.HandleFunc("/page", controllers.GetCard)
+	router := httprouter.New()
+	// 1. get all words;
+	router.GET("/word", controllers.GetCards)
+	// 2. get a word;
+	router.GET("/word/:key", controllers.GetCard)
+	// 3. add a word;
+	router.POST("/word", controllers.InsertCard)
+	// 4. edit a word;
+	router.POST("/edit", controllers.EditCard)
+	// 5. delete the word;
+	router.DELETE("/delete", controllers.DeleteCard)
 
-	http.HandleFunc("/all", controllers.GetCards)
-
-	http.ListenAndServe(conf.Server.Addr, nil)
+	http.ListenAndServe(conf.Server.Addr, router)
 }

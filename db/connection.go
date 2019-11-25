@@ -1,0 +1,30 @@
+package db
+
+import (
+	"database/sql"
+	"fmt"
+	"vocab/config"
+)
+
+var (
+	db  *sql.DB
+	err error
+)
+
+func Connect() error {
+	dbConf := config.Peek().Database
+	psqlInfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable",
+		dbConf.Addr, dbConf.User, dbConf.Pass, dbConf.DBName)
+	db, err = sql.Open("postgres", psqlInfo)
+
+	return err
+}
+
+func Close() error {
+	return db.Close()
+}
+
+func Ping() (err error) {
+	err = db.Ping()
+	return
+}

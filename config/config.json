@@ -4,9 +4,9 @@
       "addr": "0.0.0.0:8080"
     },
     "database": {
-      "addr": "3306",
-      "user": "root",
-      "pass": "Lampochka95",
-      "dbname": "vocabulary"
+      "addr": "localhost",
+      "user": "postgres",
+      "pass": "postgres",
+      "dbname": "vocab"
     }
   }
