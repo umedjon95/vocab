@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"vocab/db"
 	"vocab/models"
 
@@ -37,7 +38,7 @@ func GetCard(to http.ResponseWriter, from *http.Request, params httprouter.Param
 
 	var response *models.Response
 	key := params.ByName("key")
-	card, err := db.GetCard(key)
+	cards, err := db.GetCard(key)
 	if err != nil {
 		response = &models.Response{
 			Code:    500,
@@ -50,7 +51,7 @@ func GetCard(to http.ResponseWriter, from *http.Request, params httprouter.Param
 	response = &models.Response{
 		Code:    200,
 		Message: "OK",
-		Payload: card,
+		Payload: cards,
 	}
 	response.Send(to)
 	return
@@ -149,7 +150,15 @@ func EditCard(to http.ResponseWriter, from *http.Request, params httprouter.Para
 func DeleteCard(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
 
 	var response *models.Response
-
+	id, err := strconv.Atoi(params.ByName("key"))
+	if err != nil {
+		response = &models.Response{
+			Code:    400,
+			Message: "BAD_REQUEST: " + err.Error(),
+		}
+		response.Send(to)
+		return
+	}
 	// 1. get word object;
 	data, err := ioutil.ReadAll(from.Body)
 	if err != nil {
@@ -174,7 +183,7 @@ func DeleteCard(to http.ResponseWriter, from *http.Request, params httprouter.Pa
 	// 2. validate;
 
 	// 3. edit the word;
-	err = db.DeleteCard(&card)
+	err = db.DeleteCard(id)
 	if err != nil {
 		response = &models.Response{
 			Code:    500,

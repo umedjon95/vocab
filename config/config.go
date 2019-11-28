@@ -13,6 +13,7 @@ var (
 )
 
 func init() {
+
 	log.SetOutput(&lumberjack.Logger{
 		Filename:   "logs/app.log",
 		MaxSize:    10, // megabytes
@@ -26,6 +27,7 @@ func init() {
 
 // Parce config from config file
 func Parce(path string) (*Config, error) {
+
 	b, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
@@ -43,6 +45,7 @@ func Peek() *Config {
 	return &cfg
 }
 
+// Config is database server configuration
 type Config struct {
 	Server    server    `json:"server"`
 	Database  database  `json:"database"`

@@ -34,9 +34,9 @@ func main() {
 	// 3. add a word;
 	router.POST("/word", controllers.InsertCard)
 	// 4. edit a word;
-	router.POST("/edit", controllers.EditCard)
+	router.PUT("/word", controllers.EditCard)
 	// 5. delete the word;
-	router.DELETE("/delete", controllers.DeleteCard)
+	router.DELETE("/word/:key", controllers.DeleteCard)
 
 	http.ListenAndServe(conf.Server.Addr, router)
 }
