@@ -47,9 +47,8 @@ func Peek() *Config {
 
 // Config is database server configuration
 type Config struct {
-	Server    server    `json:"server"`
-	Database  database  `json:"database"`
-	Configure configure `json:"configure"`
+	Server   server   `json:"server"`
+	Database database `json:"database"`
 }
 
 type server struct {
@@ -62,8 +61,4 @@ type database struct {
 	User   string `json:"user"`
 	Pass   string `json:"pass"`
 	DBName string `json:"dbname"`
-}
-
-type configure struct {
-	Addr string `json:"addr"`
 }
