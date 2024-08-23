@@ -28,6 +28,9 @@ func main() {
 
 	router := httprouter.New()
 
+	//ping project;
+	router.GET("/ping", controllers.Ping)
+
 	//get all words;
 	router.GET("/word", controllers.GetCards)
 

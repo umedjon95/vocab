@@ -12,7 +12,20 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-//GetCards gets all cards from DB
+// Ping check state of the project
+func Ping(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
+
+	var response *models.Response
+
+	response = &models.Response{
+		Code:    200,
+		Message: "OK",
+		Payload: "Working",
+	}
+	response.Send(to)
+}
+
+// GetCards gets all cards from DB
 func GetCards(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
 
 	var response *models.Response
@@ -35,7 +48,7 @@ func GetCards(to http.ResponseWriter, from *http.Request, params httprouter.Para
 	response.Send(to)
 }
 
-//RandCard gets 4 random cards from DB
+// RandCard gets 4 random cards from DB
 func RandCard(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
 
 	var response *models.Response
@@ -58,7 +71,7 @@ func RandCard(to http.ResponseWriter, from *http.Request, params httprouter.Para
 	response.Send(to)
 }
 
-//CheckCard weather card exists in DB
+// CheckCard weather card exists in DB
 func CheckCard(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
 
 	var response *models.Response
@@ -104,7 +117,7 @@ func CheckCard(to http.ResponseWriter, from *http.Request, params httprouter.Par
 	response.Send(to)
 }
 
-//GetCard gets cards from DB by given word
+// GetCard gets cards from DB by given word
 func GetCard(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
 
 	var response *models.Response
@@ -128,7 +141,7 @@ func GetCard(to http.ResponseWriter, from *http.Request, params httprouter.Param
 	return
 }
 
-//InsertCard insertes a new card to DB
+// InsertCard insertes a new card to DB
 func InsertCard(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
 
 	var response *models.Response
@@ -174,7 +187,7 @@ func InsertCard(to http.ResponseWriter, from *http.Request, params httprouter.Pa
 	response.Send(to)
 }
 
-//EditCard edites a card by given id
+// EditCard edites a card by given id
 func EditCard(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
 
 	var response *models.Response
@@ -220,7 +233,7 @@ func EditCard(to http.ResponseWriter, from *http.Request, params httprouter.Para
 	response.Send(to)
 }
 
-//DeleteCard deletes a card by given id
+// DeleteCard deletes a card by given id
 func DeleteCard(to http.ResponseWriter, from *http.Request, params httprouter.Params) {
 
 	var response *models.Response

@@ -1,1 +1,8 @@
 2019/11/28 11:28:01 -------- * ------- Starting Logging -------- * -------
+2024/08/23 10:51:02 -------- * ------- Starting Logging -------- * -------
+2024/08/23 10:55:24 -------- * ------- Starting Logging -------- * -------
+2024/08/23 11:04:20 db.GetCards err: dial tcp [::1]:5432: connect: connection refused
+2024/08/23 11:22:37 db.GetCards err: pq: database "vocab" does not exist
+2024/08/23 11:22:38 db.GetCards err: pq: database "vocab" does not exist
+2024/08/23 11:24:01 db.GetCards err: pq: relation "words" does not exist
+2024/08/23 11:24:04 db.GetCards err: pq: relation "words" does not exist
