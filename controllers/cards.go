@@ -6,8 +6,9 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"vocab/db"
-	"vocab/models"
+
+	"github.com/umedjon95/vocab/db"
+	"github.com/umedjon95/vocab/models"
 
 	"github.com/julienschmidt/httprouter"
 )

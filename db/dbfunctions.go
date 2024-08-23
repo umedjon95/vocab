@@ -3,10 +3,11 @@ package db
 import (
 	"math/rand"
 	"strconv"
-	"vocab/models"
+
+	"github.com/umedjon95/vocab/models"
 )
 
-//GetCard returns searched word card from DB
+// GetCard returns searched word card from DB
 func GetCard(word string) ([]models.Card, error) {
 
 	query := "SELECT id, word, meaning FROM words where word LIKE '%" + word + "%';"
@@ -29,7 +30,7 @@ func GetCard(word string) ([]models.Card, error) {
 	return cards, nil
 }
 
-//GetCards returns all the cards from DB
+// GetCards returns all the cards from DB
 func GetCards() ([]models.Card, error) {
 
 	rows, err := db.Query("SELECT id, word, meaning FROM words;")
@@ -51,7 +52,7 @@ func GetCards() ([]models.Card, error) {
 	return cards, nil
 }
 
-//RandCard returns 4 random cards from DB
+// RandCard returns 4 random cards from DB
 func RandCard() ([]models.Card, error) {
 
 	rows, err := db.Query(`	SELECT 
@@ -98,7 +99,7 @@ func RandCard() ([]models.Card, error) {
 	return cards, nil
 }
 
-//CheckCard check weather card exist in DB
+// CheckCard check weather card exist in DB
 func CheckCard(card *models.Card) (exists bool, err error) {
 
 	query := `SELECT EXISTS(
@@ -129,7 +130,7 @@ func CheckCard(card *models.Card) (exists bool, err error) {
 	return
 }
 
-//InsertCard insertes new card to DB
+// InsertCard insertes new card to DB
 func InsertCard(card *models.Card) (err error) {
 
 	query := "INSERT INTO words(word, meaning) VALUES('" + card.Word + "', '" + card.Meaning + "');"
@@ -141,7 +142,7 @@ func InsertCard(card *models.Card) (err error) {
 	return
 }
 
-//EditCard edit card in DB from taken id
+// EditCard edit card in DB from taken id
 func EditCard(card *models.Card) (err error) {
 
 	query := "UPDATE words SET word = '" + card.Word + "', meaning = '" + card.Meaning + "' WHERE id = " + strconv.Itoa(card.ID)
@@ -153,7 +154,7 @@ func EditCard(card *models.Card) (err error) {
 	return
 }
 
-//DeleteCard deletes card from DB from taken id
+// DeleteCard deletes card from DB from taken id
 func DeleteCard(id int) (err error) {
 
 	query := "DELETE FROM words WHERE id = " + strconv.Itoa(id)

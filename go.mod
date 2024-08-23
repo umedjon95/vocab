@@ -1,4 +1,4 @@
-module vocab
+module github.com/umedjon95/vocab
 
 go 1.23.0
 

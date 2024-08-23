@@ -4,9 +4,10 @@ import (
 	"flag"
 	"log"
 	"net/http"
-	"vocab/config"
-	"vocab/controllers"
-	"vocab/db"
+
+	"github.com/umedjon95/vocab/config"
+	"github.com/umedjon95/vocab/controllers"
+	"github.com/umedjon95/vocab/db"
 
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
